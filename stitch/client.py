@@ -27,6 +27,7 @@ class Stitch:
         self,
         bank_account: LinkPayBankAccount,
         payer: Payer,
+        redirect_url: str,
         initial: InitialPayment = None,
     ) -> str:
         result = self.gql_client.execute(
@@ -38,9 +39,9 @@ class Stitch:
             },
         )
 
-        redirect_url = result['clientPaymentAuthorizationRequestCreate']['authorizationRequestUrl']
+        url = result['clientPaymentAuthorizationRequestCreate']['authorizationRequestUrl']
 
-        return self._build_redirect_url(redirect_url, 'https://example.com/payment')
+        return self._build_redirect_url(url, redirect_url)
 
     def create_payment_request(
         self,
@@ -49,6 +50,7 @@ class Stitch:
         beneficiary_reference: str,
         external_reference: str,
         bank_account: InstantPayBankAccount,
+        redirect_url: str,
     ):
         result = self.gql_client.execute(
             create_payment_request.query,
@@ -62,9 +64,9 @@ class Stitch:
         )
 
         payment_request = result['clientPaymentInitiationRequestCreate']['paymentInitiationRequest']
-        redirect_url = payment_request['url']
+        url = payment_request['url']
 
-        return self._build_redirect_url(redirect_url, 'https://example.com/payment')
+        return self._build_redirect_url(url, redirect_url)
 
     @property
     def gql_client(self) -> Client:
