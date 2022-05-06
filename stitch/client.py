@@ -21,7 +21,7 @@ class Stitch:
     cert_path: str
     client_id: str
 
-    _gql_client: Client = field(init=False, default=None)
+    _gql_client: Client | None = field(init=False, default=None)
 
     def create_payment_authorisation(
         self,
@@ -70,16 +70,19 @@ class Stitch:
 
     @property
     def gql_client(self) -> Client:
-        if self._gql_client is not None:
-            return self._gql_client
+        if self._gql_client is None:
+            client_token = self._get_client_token()
+            auth_header = {'Authorization': f'Bearer {client_token}'}
 
-        client_token = self._get_client_token()
-        auth_header = {'Authorization': f'Bearer {client_token}'}
+            transport = RequestsHTTPTransport(self.url, headers=auth_header)
+            client = Client(transport=transport)
 
-        transport = RequestsHTTPTransport(self.url, headers=auth_header)
-        client = Client(transport=transport)
+            self._gql_client = client
 
-        return client
+        return self._gql_client
+
+    def reset_auth(self):
+        self._gql_client = None
 
     def _extract_stitch_error(self, errors: list[dict]) -> dict:
         for error in errors:
