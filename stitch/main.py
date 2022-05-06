@@ -58,8 +58,8 @@ def example_create_payment_request(client: Stitch) -> str:
 def main():
     client = Stitch(
         url='https://api.stitch.money/graphql',
-        cert_path='./stitch/certificate.pem',
-        client_id='test-282cd917-4a42-4ddc-9e59-ddc2df985896',
+        cert_path='./certificate.pem',
+        client_id='test-1111111-1111-1111-1111-1111111111',
     )
 
     payment_auth_url = example_create_payment_authorisation(client)
