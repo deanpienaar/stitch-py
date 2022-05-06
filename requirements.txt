@@ -1,0 +1,6 @@
+cryptography==37.0.2
+gql==3.2.0
+graphql-core==3.2.1
+PyJWT==2.3.0
+requests==2.27.1
+requests-toolbelt==0.9.1

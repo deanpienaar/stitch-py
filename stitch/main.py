@@ -25,7 +25,7 @@ def example_create_payment_authorisation(client: Stitch) -> str:
         'phoneNumber': '27821234567'
     }
 
-    url = client.create_payment_authorisation(bank_account, payer, 'https://example.com')
+    url = client.create_payment_authorisation(bank_account, payer, 'https://localhost:8000/return')
 
     return url
 
@@ -49,7 +49,7 @@ def example_create_payment_request(client: Stitch) -> str:
         beneficiary_reference='Ben Ref',
         external_reference='Ext Ref',
         bank_account=bank_account,
-        redirect_url='https://example.com/payment',
+        redirect_url='https://localhost:8000/return',
     )
 
     return url
@@ -64,6 +64,9 @@ def main():
 
     payment_auth_url = example_create_payment_authorisation(client)
     payment_request_url = example_create_payment_request(client)
+
+    print(payment_auth_url)
+    print(payment_request_url)
 
 
 if __name__ == '__main__':
