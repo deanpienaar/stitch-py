@@ -3,7 +3,7 @@ from typing import TypedDict
 
 from gql import gql
 
-from stitch.queries.shared_types import BankId
+from .shared_types import BankId
 
 
 class Payer(TypedDict):
@@ -51,7 +51,7 @@ query = gql(
     ) {
       clientPaymentAuthorizationRequestCreate(
         input: {
-          beneficiary: $beneficiary, 
+          beneficiary: $beneficiary,
           payer: $payer,
           initialPayment: $initialPayment,
         }
@@ -59,5 +59,5 @@ query = gql(
         authorizationRequestUrl
       }
     }
-    """
+    """,
 )

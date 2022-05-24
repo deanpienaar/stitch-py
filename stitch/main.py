@@ -1,9 +1,9 @@
 from stitch.client import Stitch
 from stitch.queries.create_payment_authorisation import (
-    Payer,
-    LinkPayBankAccount,
-    BeneficiaryType,
     AccountType,
+    BeneficiaryType,
+    LinkPayBankAccount,
+    Payer,
 )
 from stitch.queries.create_payment_request import InstantPayBankAccount
 from stitch.queries.shared_types import BankId
@@ -16,13 +16,13 @@ def example_create_payment_authorisation(client: Stitch) -> str:
         'accountNumber': '1234567890',
         'accountType': AccountType.Current,
         'beneficiaryType': BeneficiaryType.Private,
-        'reference': 'TestBeneficiary'
+        'reference': 'TestBeneficiary',
     }
     payer: Payer = {
         'email': 'sampleuser@example.com',
         'name': 'Sample User',
         'reference': 'TestPayer',
-        'phoneNumber': '27821234567'
+        'phoneNumber': '27821234567',
     }
 
     url = client.create_payment_authorisation(bank_account, payer, 'https://localhost:8000/return')
@@ -40,7 +40,7 @@ def example_create_payment_request(client: Stitch) -> str:
         'email': 'sampleuser@example.com',
         'name': 'Sample User',
         'reference': 'TestPayer',
-        'phoneNumber': '27821234567'
+        'phoneNumber': '27821234567',
     }
 
     url = client.create_payment_request(
