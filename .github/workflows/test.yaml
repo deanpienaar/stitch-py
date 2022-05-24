@@ -1,0 +1,36 @@
+name: Test PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  cancel-in-progress: true
+  group: test-pr-${{ $github.ref }}
+
+
+env:
+  PIP_CACHE_DIR: ${HOME}/.cache/pip
+
+jobs:
+  lint:
+    name: Lint Changes
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+      - name: Cache Pip Deps
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.PIP_CACHE_DIR }}
+          key: pip-${{ hashFiles('requirements/*.txt') }}
+      - name: Install Deps
+        run: pip install -r ./requirements/dev.txt
+      - name: Lint Code
+        run: |
+          flake8
+          isort . --check-only
