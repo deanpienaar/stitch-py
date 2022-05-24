@@ -14,8 +14,8 @@ env:
   PIP_CACHE_DIR: ${HOME}/.cache/pip
 
 jobs:
-  lint:
-    name: Lint Changes
+  lint-and-test:
+    name: Lint & Test Changes
     runs-on: ubuntu-20.04
 
     steps:
@@ -34,3 +34,5 @@ jobs:
         run: |
           flake8
           isort . --check-only
+      - name: Test Code
+        run: pytest -n auto
