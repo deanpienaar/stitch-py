@@ -27,14 +27,14 @@ class Stitch:
         bank_account: LinkPayBankAccount,
         payer: Payer,
         redirect_url: str,
-        initial: InitialPayment = None,
+        initial_payment: InitialPayment = None,
     ) -> str:
         result = self.gql_client.execute(
             create_payment_authorisation.query,
             variable_values={
                 'beneficiary': {'bankAccount': bank_account},
                 'payer': payer,
-                'initialPayment': initial,
+                'initialPayment': initial_payment,
             },
         )
 
@@ -128,4 +128,4 @@ class Stitch:
 
     @staticmethod
     def _build_redirect_url(base_url: str, redirect_url: str) -> str:
-        return base_url + '?' + urlencode({'redirect_uri': redirect_url})
+        return f'{base_url}?{urlencode({"redirect_uri": redirect_url})}'
