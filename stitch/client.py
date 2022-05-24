@@ -84,7 +84,8 @@ class Stitch:
     def reset_auth(self):
         self._gql_client = None
 
-    def _extract_stitch_error(self, errors: list[dict]) -> dict:
+    @staticmethod
+    def _extract_stitch_error(errors: list[dict]) -> dict:
         for error in errors:
             if error.get('extensions', {}).get('code'):
                 return error

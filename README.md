@@ -4,6 +4,9 @@
 $ pip install -r ./requirements.txt
 ```
 
+### Usage
+Import Stitch from stitch and off you go!
+
 ### Examples
 You can run the examples in main.py with
 ```zsh
