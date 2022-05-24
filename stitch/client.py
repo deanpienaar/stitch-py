@@ -1,16 +1,15 @@
 from dataclasses import dataclass, field
 import time
-from decimal import Decimal
 from urllib.parse import urlencode
 from uuid import uuid4 as uuid
 
-import jwt
-import requests
 from gql import Client
 from gql.transport.requests import RequestsHTTPTransport
+import jwt
+import requests
 
 from .queries import create_payment_authorisation, create_payment_request
-from .queries.create_payment_authorisation import Payer, InitialPayment, LinkPayBankAccount
+from .queries.create_payment_authorisation import InitialPayment, LinkPayBankAccount, Payer
 from .queries.create_payment_request import InstantPayBankAccount
 from .queries.shared_types import Currency
 

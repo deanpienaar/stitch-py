@@ -1,0 +1,5 @@
+[flake8]
+exclude = .git,*/migrations/*,*/static/CACHE/*,venv,./node_modules/
+ignore = F405,Q001,W503,W605,N815
+import-order-style = google
+max-line-length = 100
