@@ -128,4 +128,4 @@ class Stitch:
 
     @staticmethod
     def _build_redirect_url(base_url: str, redirect_url: str) -> str:
-        return base_url + '?' + urlencode({'redirect_uri': redirect_url})
+        return f'{base_url}?{urlencode({"redirect_uri": redirect_url})}'
