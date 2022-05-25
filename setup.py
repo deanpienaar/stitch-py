@@ -6,11 +6,11 @@ with open('./requirements/base.txt') as f:
 
 setup(
     name='stitch_sdk',
-    version='v0.0.1',
+    version='v0.0.2',
     description='Unofficial Stitch Python SDK',
     install_requires=requirements,
     url='https://github.com/deanpienaar/stitch-py',
     author='Dean Pienaar',
     license='MIT',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests']),
 )
