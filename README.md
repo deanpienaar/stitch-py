@@ -10,7 +10,7 @@ Import Stitch from stitch and off you go!
 ### Examples
 You can run the examples in main.py with
 ```zsh
-$ python -m stitch.main
+$ python -m stitch_sdk.main
 ```
 
 You will need a Stitch `client.json` and `certificate.pem`.
