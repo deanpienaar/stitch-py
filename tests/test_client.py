@@ -1,4 +1,4 @@
-from stitch.client import Stitch
+from stitch_py.client import Stitch
 
 
 # TODO: Write real tests

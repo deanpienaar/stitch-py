@@ -1,12 +1,12 @@
-from stitch.client import Stitch
-from stitch.queries.create_payment_authorisation import (
+from stitch_py.client import Stitch
+from stitch_py.queries.create_payment_authorisation import (
     AccountType,
     BeneficiaryType,
     LinkPayBankAccount,
     Payer,
 )
-from stitch.queries.create_payment_request import InstantPayBankAccount
-from stitch.queries.shared_types import BankId
+from stitch_py.queries.create_payment_request import InstantPayBankAccount
+from stitch_py.queries.shared_types import BankId
 
 
 def example_create_payment_authorisation(client: Stitch) -> str:
