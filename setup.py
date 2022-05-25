@@ -1,4 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
 
 with open('./requirements/base.txt') as f:
     requirements = f.read().split('\n')
