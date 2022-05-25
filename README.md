@@ -1,7 +1,7 @@
 # Stitch Python SDK
 ### Setup
 ```zsh
-$ pip install -r ./requirements/dev.txt
+$ pip install stitch-sdk
 ```
 
 ### Usage
