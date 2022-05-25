@@ -4,10 +4,13 @@ from urllib.parse import urlencode
 from uuid import uuid4 as uuid
 
 from gql import Client
+from gql.transport.exceptions import TransportQueryError
 from gql.transport.requests import RequestsHTTPTransport
+from graphql import DocumentNode
 import jwt
 import requests
 
+from .exceptions import StitchAPIError
 from .queries import create_payment_authorisation, create_payment_request
 from .queries.create_payment_authorisation import InitialPayment, LinkPayBankAccount, Payer
 from .queries.create_payment_request import InstantPayBankAccount
@@ -27,14 +30,14 @@ class Stitch:
         bank_account: LinkPayBankAccount,
         payer: Payer,
         redirect_url: str,
-        initial: InitialPayment = None,
+        initial_payment: InitialPayment = None,
     ) -> str:
-        result = self.gql_client.execute(
+        result = self._make_query(
             create_payment_authorisation.query,
-            variable_values={
+            variables={
                 'beneficiary': {'bankAccount': bank_account},
                 'payer': payer,
-                'initialPayment': initial,
+                'initialPayment': initial_payment,
             },
         )
 
@@ -51,9 +54,9 @@ class Stitch:
         bank_account: InstantPayBankAccount,
         redirect_url: str,
     ):
-        result = self.gql_client.execute(
+        result = self._make_query(
             create_payment_request.query,
-            variable_values={
+            variables={
                 'amount': amount,
                 'payerReference': payer_reference,
                 'beneficiaryReference': beneficiary_reference,
@@ -83,8 +86,19 @@ class Stitch:
     def reset_auth(self):
         self._gql_client = None
 
+    def _make_query(self, document: DocumentNode, variables: dict[str] = None) -> dict:
+        try:
+            return self.gql_client.execute(document, variable_values=variables)
+        except TransportQueryError as error:
+            stitch_error = Stitch._extract_stitch_error(error.errors)
+
+            if stitch_error is None:
+                raise error
+
+            raise StitchAPIError(stitch_error['extensions']['code'], stitch_error['message'])
+
     @staticmethod
-    def _extract_stitch_error(errors: list[dict]) -> dict:
+    def _extract_stitch_error(errors: list[dict[str, str]]) -> dict | None:
         for error in errors:
             if error.get('extensions', {}).get('code'):
                 return error
