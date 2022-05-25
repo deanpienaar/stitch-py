@@ -5,7 +5,7 @@ with open('./requirements/base.txt') as f:
 
 
 setup(
-    name='stitch_py',
+    name='stitch_sdk',
     version='v0.0.1',
     description='Unofficial Stitch Python SDK',
     install_requires=requirements,
